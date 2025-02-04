@@ -1,0 +1,695 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>DashLite - Learning Management Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          rel="stylesheet" />
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --primary-color: #6c5ce7;
+            --secondary-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f6fa;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .logout {
+            position: absolute;
+            bottom: 20px;
+            width: calc(var(--sidebar-width) - 2rem);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+        }
+
+        .nav-link {
+            color: #666;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background-color: var(--secondary-bg);
+            color: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        .main-content > div {
+            display: none; /* Hide all content sections initially */
+        }
+
+        .main-content > div.active {
+            display: block; /* Show only the active section */
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            padding: 0.8rem 1rem;
+        }
+
+        /* Search Bar */
+        .navbar .form-control {
+            width: 250px;
+            border-radius: 20px;
+        }
+
+        /* Icons & Buttons */
+        .navbar .btn {
+            border: none;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .navbar .btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Badge (Notifications) */
+        .navbar .badge {
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Avatar */
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Dropdown Styling */
+        .dropdown-menu {
+            border: none;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+            min-width: 150px;
+        }
+
+        /* Dark Mode */
+        .dark-mode {
+            background-color: #1a1a1a;
+            color: white;
+        }
+
+        .dark-mode .navbar {
+            background-color: #333;
+        }
+
+        .dark-mode .form-control {
+            background-color: #444;
+            color: white;
+            border: 1px solid #555;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div>
+            <h4 class="mb-4">DashLite</h4>
+            <nav class="nav flex-column">
+                <a class="nav-link active" data-target="dashboard">
+                    <i class="fas fa-th-large"></i> Dashboard
+                </a>
+                <a class="nav-link" data-target="profile">
+                    <i class="fas fa-user-circle"></i> Profile
+                </a>
+                <a class="nav-link" data-target="curriculum">
+                    <i class="fas fa-book"></i> Curriculum
+                </a>
+                <a class="nav-link" data-target="assessments">
+                    <i class="fa-solid fa-puzzle-piece"></i> Assessments
+                </a>
+                <a class="nav-link" data-target="ai-quiz">
+                    <i class="fas fa-file-invoice"></i> AI Quiz
+                </a>
+            </nav>
+        </div>
+
+        <!-- Logout Button -->
+        <div class="logout">
+            <a class="nav-link" href="#">
+                <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+            </a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <div class="active" id="dashboard">
+            <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4 p-3">
+                <div class="container-fluid">
+                    <form class="d-flex me-auto">
+                        <input class="form-control"
+                               placeholder="Search everything"
+                               type="search" />
+                    </form>
+
+                    <div class="d-flex align-items-center gap-3">
+                        <div class="dropdown">
+                            <button class="btn btn-light"
+                                    data-bs-toggle="dropdown"
+                                    id="dropdownMenuButton"
+                                    type="button">
+                                <i class="fas fa-globe"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        English
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Spanish
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- <button class="btn btn-light">
+                            <i class="fas fa-moon"></i>
+                        </button> -->
+                        <button class="btn btn-light position-relative">
+                            <i class="fas fa-bell"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                3
+                            </span>
+                        </button>
+                        <div class="dropdown">
+                            <button class="btn d-flex align-items-center gap-2"
+                                    data-bs-toggle="dropdown"
+                                    id="profileDropdown"
+                                    type="button">
+                                <div class="avatar">RK</div>
+                                <span>Ramakanth kannuri</span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Profile
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">
+                                        Settings
+                                    </a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#">Logout</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="mb-1">Dashboard</h4>
+                    <p class="text-muted mb-0">
+                        Welcome to Learning Management Dashboard
+                    </p>
+                </div>
+                <div class="d-flex gap-2">
+                    <select class="form-select">
+                        <option>Last 30 Days</option>
+                        <option>Last 60 Days</option>
+                        <option>Last 90 Days</option>
+                    </select>
+                    <button class="btn btn-primary">Reports</button>
+                </div>
+            </div>
+        </div>
+        <div id="profile">
+            <h1>Profile</h1>
+            <p>This is the profile section.</p>
+        </div>
+        <div id="curriculum">
+            <div id="curriculum">
+                <div id="curriculum">
+                    <p>Select Your Branch</p>
+                    <div style="display: flex; gap: 20px;">
+                        <!-- First Dropdown -->
+                        <div class="dropdown">
+                            <button id="dropdown-branch-button"
+                                    class="btn btn-secondary dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                Select Branch
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#" data-branch="CSE / IT">CSE / IT</a></li>
+                                <li><a class="dropdown-item" href="#" data-branch="ECE, EEE, EIE">ECE, EEE, EIE</a></li>
+                                <li><a class="dropdown-item" href="#" data-branch="Mechanical">Mechanical</a></li>
+                                <li><a class="dropdown-item" href="#" data-branch="Chemical">Chemical</a></li>
+                                <li><a class="dropdown-item" href="#" data-branch="Civil">Civil</a></li>
+                            </ul>
+                        </div>
+                
+                        <!-- Second Dropdown (Initially Hidden) -->
+                        <div class="dropdown" id="second-dropdown-container" style="display: none;">
+                            <button id="dropdown-subject-button"
+                                    class="btn btn-secondary dropdown-toggle"
+                                    type="button"
+                                    data-bs-toggle="dropdown"
+                                    aria-expanded="false">
+                                    Indicate Job Preference
+                            </button>
+                            <ul class="dropdown-menu" id="dropdown-subject-menu">
+                                <!-- Predefined job roles for each branch -->
+                                <div id="CSE / IT-roles" class="job-roles d-none">
+                                    <li><a class="dropdown-item" href="#" data-role="Frontend Development">Frontend Development</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Backend Development">Backend Development</a></li>
+                                </div>
+                
+                                <div id="ECE, EEE, EIE-roles" class="job-roles d-none">
+                                    <li><a class="dropdown-item" href="#" data-role="Embedded Application Developer">Embedded Application Developer (ECE)</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Electrical Design Engineer">Electrical Design Engineer (EEE)</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Electronics Engineer">Electronics Engineer (EEE, EIE & ECE)</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Trainee Engineer">Trainee Engineer</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Engineer - PLC Programmer">Engineer - PLC Programmer</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="VLSI Design Engineer">VLSI Design Engineer</a></li>
+                                </div>
+                
+                                <div id="Mechanical-roles" class="job-roles d-none">
+                                    <li><a class="dropdown-item" href="#" data-role="Mechanical Engineer (Intern)">Mechanical Engineer (Intern)</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Mechanical Engineering, Structural Engineering">Mechanical Engineering, Structural Engineering</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="R&D Intern">R&D Intern</a></li>
+                                </div>
+                
+                                <div id="Chemical-roles" class="job-roles d-none">
+                                    <li><a class="dropdown-item" href="#" data-role=" Process Engineer in chemical plants"> Process Engineer in chemical plants</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Production Engineer at pharmaceutical companies">Production Engineer at pharmaceutical companies</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Research & Development Engineer">Research & Development Engineer</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Technical Service Engineer at chemical companies">Technical Service Engineer at chemical companies</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Process Safety Engineer at industrial plants">Process Safety Engineer at industrial plants</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Environmental Engineer at treatment plants">Environmental Engineer at treatment plants</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Process Design Engineer at engineering firms">Process Design Engineer at engineering firms</a></li>
+                                </div>
+                
+                                <div id="Civil-roles" class="job-roles d-none">
+                                    <li><a class="dropdown-item" href="#" data-role="Site Engineer at construction companies">Site Engineer at construction companies</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Structural Design Engineer">Structural Design Engineer</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="Quality Control Engineer at construction sites">Quality Control Engineer at construction sites</a></li>
+                                    <li><a class="dropdown-item" href="#" data-role="AutoCAD Designer at architecture firms">AutoCAD Designer at architecture firms</a></li>
+                                </div>
+                            </ul>
+                        </div>
+                    </div>
+                
+                    <!-- Content Display Area -->
+                    <div id="content-display" class="mt-4" style="display: none;">
+                        <h4 id="content-title"></h4>
+                        <div id="content-description"></div>
+                    </div>
+                </div>
+                
+                <script>
+                    // Define content descriptions for job roles
+                    const jobDescriptions = {
+                        "Frontend Development": {
+                            title: "Frontend Developer",
+                            description: `
+                                <strong>Skills:</strong>
+                                <ul>
+                                    <li>HTML/CSS/JavaScript</li>
+                                    <li>React/Angular</li>
+                                    <li>Responsive Design</li>
+                                </ul>
+                            `
+                        },
+                        "Backend Development": {
+                            title: "Backend Developer",
+                            description: `
+                                <strong>Skills:</strong>
+                                <ul>
+                                    <li>Node.js/Python/Java</li>
+                                    <li>REST APIs</li>
+                                    <li>Database Management</li>
+                                </ul>
+                            `
+                        },
+                        "Embedded Application Developer": {
+        "title": "Embedded Developer (ECE)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>ARM Processor</li>
+                <li>C Programming</li>
+                <li>Communication Protocols</li>
+            </ul>
+        `
+    },
+    "Electrical Design Engineer": {
+        "title": "Electrical Design Engineer (EEE)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>AutoCAD Electrical</li>
+                <li>Circuit Design</li>
+                <li>Power Systems</li>
+            </ul>
+        `
+    },
+    "Electronics Engineer": {
+        "title": "Electronics Engineer (EEE, EIE & ECE)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Analog and Digital Circuit Design</li>
+                <li>Signal Processing</li>
+                <li>Microcontrollers</li>
+            </ul>
+        `
+    },
+    "Trainee Engineer": {
+        "title": "Trainee Engineer",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Basic Circuit Theory</li>
+                <li>Problem-Solving</li>
+                <li>Team Collaboration</li>
+            </ul>
+        `
+    },
+    "Engineer - PLC Programmer": {
+        "title": "Engineer - PLC Programmer",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>PLC Programming (Siemens, Allen-Bradley)</li>
+                <li>SCADA Systems</li>
+                <li>Industrial Automation</li>
+            </ul>
+        `
+    },
+    
+    "VLSI Design Engineer": {
+        "title": "VLSI Design Engineer",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>PLC Programming (Siemens, Allen-Bradley)</li>
+                <li>SCADA Systems</li>
+                <li>Industrial Automation</li>
+            </ul>
+        `
+    },
+                        "Mechanical Engineer (Intern)": {
+        "title": "Mechanical Engineer Intern",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>SolidWorks</li>
+                <li>Finite Element Analysis (FEA)</li>
+                <li>Basic Thermodynamics</li>
+            </ul>
+        `
+    },
+    "Mechanical Engineering, Structural Engineering": {
+        "title": "Mechanical and Structural Engineer",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>AutoCAD</li>
+                <li>Load Analysis</li>
+                <li>Material Science</li>
+            </ul>
+        `
+    },
+    "R&D Intern": {
+        "title": "Research and Development Intern",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Analytical Thinking</li>
+                <li>Experimental Design</li>
+                <li>Data Analysis</li>
+            </ul>
+        `
+    },
+                        "Process Engineer in chemical plants": {
+        "title": "Process Engineer (Chemical Plants)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Process Simulation Software</li>
+                <li>Mass and Energy Balances</li>
+                <li>Process Optimization</li>
+            </ul>
+        `
+    },
+    "Production Engineer at pharmaceutical companies": {
+        "title": "Production Engineer (Pharmaceuticals)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Good Manufacturing Practices (GMP)</li>
+                <li>Lean Manufacturing</li>
+                <li>Quality Control</li>
+            </ul>
+        `
+    },
+    "Research & Development Engineer": {
+        "title": "R&D Engineer",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Experimental Methodologies</li>
+                <li>Prototype Development</li>
+                <li>Technical Documentation</li>
+            </ul>
+        `
+    },
+    "Technical Service Engineer at chemical companies": {
+        "title": "Technical Service Engineer (Chemical Companies)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Customer Support</li>
+                <li>Technical Troubleshooting</li>
+                <li>Product Knowledge</li>
+            </ul>
+        `
+    },
+    "Process Safety Engineer at industrial plants": {
+        "title": "Process Safety Engineer (Industrial Plants)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Risk Assessment</li>
+                <li>Safety Management Systems</li>
+                <li>Regulatory Compliance</li>
+            </ul>
+        `
+    },
+    "Environmental Engineer at treatment plants": {
+        "title": "Environmental Engineer (Treatment Plants)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Environmental Regulations</li>
+                <li>Water Quality Management</li>
+                <li>Pollution Control Technologies</li>
+            </ul>
+        `
+    },
+    "Process Design Engineer at engineering firms": {
+        "title": "Process Design Engineer (Engineering Firms)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Process Flow Diagrams</li>
+                <li>Design Software (ASPEN, HYSYS)</li>
+                <li>Project Management</li>
+            </ul>
+        `
+    },
+                        "Site Engineer at construction companies": {
+        "title": "Site Engineer (Construction)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Project Management</li>
+                <li>Site Surveying</li>
+                <li>Construction Safety Standards</li>
+            </ul>
+        `
+    },
+    "Structural Design Engineer": {
+        "title": "Structural Design Engineer",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Building Codes and Standards</li>
+                <li>Finite Element Analysis (FEA)</li>
+                <li>AutoCAD and Revit</li>
+            </ul>
+        `
+    },
+    "Quality Control Engineer at construction sites": {
+        "title": "Quality Control Engineer (Construction Sites)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>Inspection Techniques</li>
+                <li>Quality Assurance Protocols</li>
+                <li>Defect Tracking</li>
+            </ul>
+        `
+    },
+    "AutoCAD Designer at architecture firms": {
+        "title": "AutoCAD Designer (Architecture Firms)",
+        "description": `
+            <strong>Skills:</strong>
+            <ul>
+                <li>AutoCAD Proficiency</li>
+                <li>3D Modeling</li>
+                <li>Architectural Drafting</li>
+            </ul>
+        `
+    }
+                    };
+                
+                    // Handle first dropdown selection
+                    document.querySelectorAll('.dropdown-item[data-branch]').forEach(item => {
+                        item.addEventListener('click', function () {
+                            const selectedBranch = this.getAttribute('data-branch');
+                            document.getElementById('dropdown-branch-button').textContent = selectedBranch;
+                            document.getElementById('dropdown-branch-button').disabled = true; // Disable first dropdown
+                
+                            // Show second dropdown
+                            document.getElementById('second-dropdown-container').style.display = 'block';
+                
+                            // Hide all role lists and show the selected branch roles
+                            document.querySelectorAll('.job-roles').forEach(list => list.classList.add('d-none'));
+                            document.getElementById(`${selectedBranch}-roles`).classList.remove('d-none');
+                        });
+                    });
+                
+                    // Handle second dropdown selection
+                    document.querySelectorAll('.dropdown-item[data-role]').forEach(item => {
+                        item.addEventListener('click', function () {
+                            const selectedRole = this.getAttribute('data-role');
+                            document.getElementById('dropdown-subject-button').textContent = selectedRole;
+                
+                            // Display content
+                            const content = jobDescriptions[selectedRole];
+                            document.getElementById('content-title').textContent = content.title;
+                            document.getElementById('content-description').innerHTML = content.description;
+                            document.getElementById('content-display').style.display = 'block';
+                        });
+                    });
+                </script>
+                
+            </div>
+        </div>
+        <div id="assessments">
+            <h1>Assessments</h1>
+            <p>This is the assessments section.</p>
+        </div>
+        <div id="ai-quiz">
+            <h1>AI Quiz</h1>
+            <p>This is the AI quiz section.</p>
+        </div>
+    </div>
+
+    <script>
+        // SideBar
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function () {
+                let target = this.getAttribute('data-target');
+                if (!target) return; // Ignore links without a target
+
+                // Hide all sections
+                document.querySelectorAll('.main-content > div').forEach(section => {
+                    section.classList.remove('active');
+                });
+
+                // Show only the selected section
+                document.getElementById(target).classList.add('active');
+
+                // Remove active class from all links
+                document.querySelectorAll('.nav-link').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+
+                // Set active class on clicked link
+                this.classList.add('active');
+            });
+        });
+
+        // Navbar Script
+        document.addEventListener("DOMContentLoaded", function () {
+            // Dropdown toggling
+            document.querySelectorAll("[data-bs-toggle='dropdown']").forEach(button => {
+                button.addEventListener("click", function (event) {
+                    event.stopPropagation();
+                    let dropdownMenu = this.nextElementSibling;
+                    document.querySelectorAll(".dropdown-menu").forEach(menu => {
+                        if (menu !== dropdownMenu) {
+                            menu.classList.remove("show");
+                        }
+                    });
+                    dropdownMenu.classList.toggle("show");
+                });
+            });
+
+            // Close dropdowns when clicking outside
+            document.addEventListener("click", function () {
+                document.querySelectorAll(".dropdown-menu").forEach(menu => {
+                    menu.classList.remove("show");
+                });
+            });
+
+            // Notification bell click (Optional)
+            document.querySelector(".fa-bell").addEventListener("click", function () {
+                alert("You have new notifications!");
+            });
+
+            // Dark mode toggle
+            document.querySelector(".fa-moon").addEventListener("click", function () {
+                document.body.classList.toggle("dark-mode");
+            });
+        });
+    </script>
+</body>
+</html>

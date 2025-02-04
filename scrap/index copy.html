@@ -1,0 +1,656 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>DashLite - Learning Management Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+          rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          rel="stylesheet" />
+    <style>
+        :root {
+            --sidebar-width: 250px;
+            --primary-color: #6c5ce7;
+            --secondary-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f6fa;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            position: fixed;
+            left: 0;
+            top: 0;
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.05);
+        }
+
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .nav-link {
+            color: #666;
+            padding: 0.8rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-link:hover {
+            background-color: var(--secondary-bg);
+            color: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        .nav-link.active {
+            background-color: var(--secondary-bg);
+            color: var(--primary-color);
+            border-radius: 5px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+        }
+
+        .chart-container {
+            height: 200px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .instructor-card {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .rating {
+            color: #ffd700;
+        }
+
+        .top-courses .course-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .course-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="d-flex align-items-center mb-4">
+            <h4 class="mb-0">DashLite</h4>
+        </div>
+
+        <nav class="nav flex-column">
+            <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 220px;">
+                <div>
+                    <a class="nav-link active" href="#">
+                        <i class="fas fa-th-large"></i>
+                        Dashboard
+                    </a>
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-user-circle"></i>
+                        Profile
+                    </a>
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-book"></i>
+                        Curriculum
+                    </a>
+                    <a class="nav-link" href="#">
+                        <i class="fa-solid fa-puzzle-piece"></i>
+                        Assesments
+                    </a>
+                    <a class="nav-link" href="#">
+                        <i class="fas fa-file-invoice"></i>
+                        AI quiz
+                    </a>
+                </div>
+                <!-- <a href="#" class="nav-link">
+                <i class="fas fa-comments"></i>
+                Messages
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-chalkboard-teacher"></i>
+                Admin Profile
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-user-plus"></i>
+                Invoice
+            </a>
+            <a href="#" class="nav-link">
+                <i class="fas fa-cog"></i>
+                Settings
+                </a>-->
+                <div>
+                    <a class="nav-link" href="#">
+                        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                        logout
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Top Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-white mb-4">
+            <div class="container-fluid">
+                <form class="d-flex me-auto">
+                    <input class="form-control"
+                           placeholder="Search everything"
+                           type="search" />
+                </form>
+
+                <div class="d-flex align-items-center gap-3">
+                    <div class="dropdown">
+                        <button class="btn btn-light"
+                                data-bs-toggle="dropdown"
+                                id="dropdownMenuButton"
+                                type="button">
+                            <i class="fas fa-globe"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#">English</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Spanish</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-light">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="btn btn-light position-relative">
+                        <i class="fas fa-bell"></i>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            3
+                        </span>
+                    </button>
+                    <div class="dropdown">
+                        <button class="btn d-flex align-items-center gap-2"
+                                data-bs-toggle="dropdown"
+                                id="profileDropdown"
+                                type="button">
+                            <div class="avatar">RK</div>
+                            <span>Ramakanth kannuri</span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="#">Profile</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Settings</a>
+                            </li>
+                            <li>
+                                <hr class="dropdown-divider" />
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Dashboard Content -->
+        <div class="container-fluid px-0">
+            <!-- Header -->
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                    <h4 class="mb-1">Dashboard</h4>
+                    <p class="text-muted mb-0">
+                        Welcome to Learning Management Dashboard
+                    </p>
+                </div>
+                <div class="d-flex gap-2">
+                    <select class="form-select">
+                        <option>Last 30 Days</option>
+                        <option>Last 60 Days</option>
+                        <option>Last 90 Days</option>
+                    </select>
+                    <button class="btn btn-primary">Reports</button>
+                </div>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="stats-card">
+                        <div class="d-flex justify-content-between mb-3">
+                            <div>
+                                <h3 class="mb-0">5490</h3>
+                                <span class="text-danger">↑10.93%</span>
+                                <p class="text-muted mb-0">This Month</p>
+                            </div>
+                            <div>
+                                <h3 class="mb-0">1480</h3>
+                                <span class="text-success">↑4.26%</span>
+                                <p class="text-muted mb-0">This Week</p>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="enrollmentChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <div class="stats-card">
+                                <h6 class="text-muted mb-3">Total Sales</h6>
+                                <h3 class="mb-0">$9,495.20</h3>
+                                <span class="text-success">
+                                    ↑1.43% vs last month
+                                </span>
+                                <div class="chart-container"
+                                     style="height: 100px;">
+                                    <canvas id="salesChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="stats-card">
+                                <h6 class="text-muted mb-3">
+                                    This week so far
+                                </h6>
+                                <h3 class="mb-0">$2,995.81</h3>
+                                <span class="text-success">
+                                    ↑1.73% vs last week
+                                </span>
+                                <div class="chart-container"
+                                     style="height: 100px;">
+                                    <canvas id="weeklyChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories and Courses -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="card-title mb-0">Top Categories</h5>
+                                <button class="btn btn-link">...</button>
+                            </div>
+                            <div id="categoriesChart" style="height: 300px;">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="card-title mb-0">Top Courses</h5>
+                                <select class="form-select"
+                                        style="width: auto;">
+                                    <option>Weekly</option>
+                                    <option>Monthly</option>
+                                </select>
+                            </div>
+                            <div class="top-courses">
+                                <div class="course-item">
+                                    <div class="course-icon"
+                                         style="background-color: #6c5ce7;">
+                                        XD
+                                    </div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">
+                                            UI Design with Adobe XD
+                                        </h6>
+                                        <small class="text-muted">
+                                            25 Sold
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        <h6 class="mb-1">$2,125.00</h6>
+                                    </div>
+                                </div>
+                                <!-- Add more course items here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Instructors and Support -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="card-title mb-0">Top Instructors</h5>
+                                <a class="btn btn-link" href="#">View All</a>
+                            </div>
+                            <div class="instructor-list">
+                                <div class="instructor-card">
+                                    <div class="avatar">K</div>
+                                    <div class="flex-grow-1">
+                                        <h6 class="mb-1">Kiran</h6>
+                                        <small class="text-muted">
+                                            info@softnio.com
+                                        </small>
+                                    </div>
+                                    <div class="text-end">
+                                        <div class="rating">
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                            <i class="fas fa-star"></i>
+                                        </div>
+                                        <small class="text-muted">
+                                            25 Reviews
+                                        </small>
+                                    </div>
+                                </div>
+                                <!-- Add more instructor cards here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <h5 class="card-title mb-0">
+                                    Support Requests
+                                </h5>
+                                <a class="btn btn-link" href="#">
+                                    All Requests
+                                </a>
+                            </div>
+                            <div class="support-list">
+                                <!-- Add support request items here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js">
+    </script>
+
+    <script>
+        // Enrollment Chart
+        const enrollmentCtx = document.getElementById('enrollmentChart').getContext('2d');
+        new Chart(enrollmentCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [{
+                    label: 'Student Enrollment',
+                    data: [4500, 3800, 4200, 4800, 5200, 4900, 5100, 5400, 5200, 5100, 5300, 5490],
+                    backgroundColor: '#6c5ce7',
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Sales Chart
+        const salesCtx = document.getElementById('salesChart').getContext('2d');
+        new Chart(salesCtx, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 30}, (_, i) => i + 1),
+                datasets: [{
+                    label: 'Sales',
+                    data: Array.from({length: 30}, () => Math.floor(Math.random() * 1000) + 8000),
+                    borderColor: '#6c5ce7',
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        display: false
+                    },
+                    x: {
+                        display: false
+                    }
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                }
+            }
+        });
+
+        // Weekly Chart
+        const weeklyCtx = document.getElementById('weeklyChart').getContext('2d');
+        new Chart(weeklyCtx, {
+            type: 'line',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Weekly Sales',
+                    data: [2100, 2400, 2200, 2600, 2800, 2400, 2995.81],
+                    borderColor: '#6c5ce7',
+                    tension: 0.4,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        display: false
+                    },
+                    x: {
+                        display: false
+                    }
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                }
+            }
+        });
+
+        // Categories Chart
+        const categoriesCtx = document.getElementById('categoriesChart').getContext('2d');
+        new Chart(categoriesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Mobile Application', 'Graphics Design', 'Database', 'Marketing', 'Machine Learning', 'Data Science'],
+                datasets: [{
+                    label: 'Categories',
+                    data: [85, 70, 60, 55, 45, 40],
+                    backgroundColor: ['#4834d4', '#6c5ce7', '#a55eea', '#778beb', '#70a1ff', '#2bcbba'],
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                indexAxis: 'y',
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        }
+                    }
+                }
+            }
+        });
+
+        // Add more course items
+        const coursesList = [
+            { icon: 'AD', color: '#6c5ce7', name: 'Android App Development', sold: 10, price: 1710.00 },
+            { icon: 'WD', color: '#e84393', name: 'WordPress Development', sold: 15, price: 1050.00 },
+            { icon: 'ML', color: '#00b894', name: 'Machine Learning', sold: 10, price: 990.00 },
+            { icon: 'RD', color: '#0984e3', name: 'Responsive Design', sold: 12, price: 960.00 }
+        ];
+
+        const coursesContainer = document.querySelector('.top-courses');
+        coursesList.forEach(course => {
+            coursesContainer.innerHTML += `
+                <div class="course-item">
+                    <div class="course-icon" style="background-color: ${course.color};">${course.icon}</div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">${course.name}</h6>
+                        <small class="text-muted">${course.sold} Sold</small>
+                    </div>
+                    <div class="text-end">
+                        <h6 class="mb-1">${course.price.toFixed(2)}</h6>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Add more instructor cards
+        const instructorsList = [
+            { initials: 'AL', name: 'Ashley Lawson', email: 'ashley@softnio.com', reviews: 22 },
+            { initials: 'JM', name: 'Jane Montgomery', email: 'jane@example.com', reviews: 19 },
+            { initials: 'LH', name: 'Larry Henry', email: 'larry@example.com', reviews: 24 }
+        ];
+
+        const instructorsContainer = document.querySelector('.instructor-list');
+        instructorsList.forEach(instructor => {
+            instructorsContainer.innerHTML += `
+                <div class="instructor-card">
+                    <div class="avatar">${instructor.initials}</div>
+                    <div class="flex-grow-1">
+                        <h6 class="mb-1">${instructor.name}</h6>
+                        <small class="text-muted">${instructor.email}</small>
+                    </div>
+                    <div class="text-end">
+                        <div class="rating">
+                            ${'<i class="fas fa-star"></i>'.repeat(5)}
+                        </div>
+                        <small class="text-muted">${instructor.reviews} Reviews</small>
+                    </div>
+                </div>
+            `;
+        });
+
+        // Add support request items
+        const supportRequests = [
+            { name: 'Vincent Lopez', time: '6 min ago' },
+            { name: 'Daniel Moore', time: '2 hours ago' },
+            { name: 'Larry Henry', time: '3 hours ago' }
+        ];
+
+        const supportContainer = document.querySelector('.support-list');
+        supportRequests.forEach(request => {
+            supportContainer.innerHTML += `
+                <div class="d-flex align-items-center p-3 border-bottom">
+                    <div class="avatar me-3">${request.name.split(' ').map(n => n[0]).join('')}</div>
+                    <div>
+                        <h6 class="mb-1">${request.name}</h6>
+                        <small class="text-muted">Thanks for contacting us with your issues...</small>
+                        <p class="text-muted mb-0"><small>${request.time}</small></p>
+                    </div>
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>

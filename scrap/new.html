@@ -1,0 +1,215 @@
+<div class="assessment-card mcq">
+    <div class="question-header">Multiple Choice Questions</div>
+    <div class="question-text">Question 1 of 20</div>
+    <div class="options">
+        <div class="option">
+            To handle side effects in functional components
+        </div>
+        <div class="option">To create new React components</div>
+        <div class="option">
+            To optimize component rendering
+        </div>
+        <div class="option">
+            To manage state in class components
+        </div>
+    </div>
+    <button class="navigation-btn">Next Question</button>
+</div>
+
+<div class="assessment-card written-response">
+    <div class="assessment-header">Written Response</div>
+    <div class="question-container">
+        <div class="question-header">Question 1 of 3</div>
+        <div class="question-text">
+            Explain the concept of microservices architecture and its advantages over monolithic architecture.
+        </div>
+        <textarea class="response-textarea"
+                  placeholder="Type your answer here...">
+        </textarea>
+    </div>
+    <button class="submit-btn">Save & Continue</button>
+</div>
+
+<div class="assessment-card coding-challenge">
+    <div class="assessment-header">Coding Challenge</div>
+    <div class="question-container">
+        <div class="question-header">Question 1</div>
+        <div class="question-text">
+            Write a function that finds the longest palindromic substring in a given string.
+        </div>
+        <div class="test-case">
+            Input: "babad" → Output: "bab"
+            <br />Input: "cbbd" → Output: "bb"
+        </div>
+        <textarea class="code-editor"
+                  placeholder="function longestPalindrome(s) { ... }">
+        </textarea>
+    </div>
+    <div style="display: flex; justify-content: space-between">
+        <button class="navigation-btn">Run Code</button>
+        <button class="submit-btn">Submit Solution</button>
+    </div>
+</div>
+
+
+
+
+<div id="assessments">
+    <div class="assessment-container">
+        <!-- <div class="assessment-header-container">
+            <div class="assessment-progress">
+                <button class="progress-btn active">MCQ</button>
+                <button class="progress-btn">Written</button>
+                <button class="progress-btn">Coding</button>
+            </div>
+            <div class="timer-container">
+                <span class="timer">00:45:53</span>
+                Example Time
+            </div>
+        </div> -->
+        <div class="assessment-card">
+            <div class="assessment-header">Technical Assessment</div>
+            <div class="time-allocation-container">
+                <div class="time-allocation">
+                    Time Allocation: 90 minutes
+                </div>
+                <p>
+                    Please complete all sections within the allocated time.
+                </p>
+            </div>
+            <div class="instructions">
+                <div class="instructionhead">Instructions:</div>
+                <div class="instructiontext">
+                    This assessment consists of three sections: MCQs, Written Response, and Coding Challenge.
+                    <br />You cannot return to previous questions in the MCQ section.
+                    <br />Your progress is automatically saved in the Written Response section.
+                    <br />The Coding section requires a built-in compiler for testing your code.
+                    <br />A minimum score of 70% is required to pass this assessment
+                </div>
+            </div>
+            <button class="start-btn">Start Assessment</button>
+        </div>
+
+        <div class="assessment-progress">
+            <button class="progress-btn active" onclick="changeContent('mcq')">MCQ</button>
+            <button class="progress-btn" onclick="changeContent('written')">Written</button>
+            <button class="progress-btn" onclick="changeContent('coding')">Coding</button>
+        </div>
+        
+        <div class="timer-container">
+            <span class="timer">00:45:53</span>
+        </div>
+        
+        <!-- Assessment Sections -->
+        <div class="content">
+            <div id="mcq-content" class="assessment-card mcq active">
+                <div class="question-header">Multiple Choice Questions</div>
+                <div class="question-text">Question 1 of 20</div>
+                <div class="options">
+                    <div class="option">To handle side effects in functional components</div>
+                    <div class="option">To create new React components</div>
+                    <div class="option">To optimize component rendering</div>
+                    <div class="option">To manage state in class components</div>
+                </div>
+                <button class="navigation-btn">Next Question</button>
+            </div>
+            
+        
+            <div id="written-content" class="assessment-card written-response">
+                <div class="assessment-header">Written Response</div>
+                <div class="question-container">
+                    <div class="question-header">Question 1 of 3</div>
+                    <div class="question-text">
+                        Explain the concept of microservices architecture and its advantages over monolithic architecture.
+                    </div>
+                    <textarea class="response-textarea" placeholder="Type your answer here..."></textarea>
+                </div>
+                <button class="submit-btn">Save & Continue</button>
+            </div>
+        
+            <div id="coding-content" class="assessment-card coding-challenge">
+                <div class="assessment-header">Coding Challenge</div>
+                <div class="question-container">
+                    <div class="question-header">Question 1</div>
+                    <div class="question-text">
+                        Write a function that finds the longest palindromic substring in a given string.
+                    </div>
+                    <div class="test-case">
+                        Input: "babad" → Output: "bab" <br /> Input: "cbbd" → Output: "bb"
+                    </div>
+                    <textarea class="code-editor" placeholder="function longestPalindrome(s) { ... }"></textarea>
+                </div>
+                <div style="display: flex; justify-content: space-between">
+                    <button class="navigation-btn">Run Code</button>
+                    <button class="submit-btn">Submit Solution</button>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+            function changeContent(section) {
+                const buttons = document.querySelectorAll('.progress-btn');
+                const sections = document.querySelectorAll('.assessment-card');
+        
+                // Reset active buttons
+                buttons.forEach(button => button.classList.remove('active'));
+                sections.forEach(sec => sec.style.display = 'none');
+        
+                // Activate selected section and button
+                document.querySelector(`[onclick="changeContent('${section}')"]`).classList.add('active');
+                document.getElementById(`${section}-content`).style.display = 'block';
+            }
+        
+            // Initialize by hiding all sections except MCQ
+            document.addEventListener('DOMContentLoaded', () => {
+                document.querySelectorAll('.assessment-card').forEach(sec => sec.style.display = 'none');
+                document.getElementById('mcq-content').style.display = 'block';
+            });
+        </script>
+        
+        <style>
+            .assessment-card {
+                display: none;
+            }
+        
+            .progress-btn.active {
+                background-color: #007bff;
+                color: white;
+            }
+        </style>
+        
+        
+
+        
+
+        
+    <!-- </div> -->
+</div>
+</div>
+
+
+<div class="assessment-card important">
+    <div class="important-notice">
+        <div class="important-notice-icon">⚠️</div>
+        <div>
+            <div class="important-notice-text">
+                Important Notice
+            </div>Once submitted, you cannot modify your answers. Please review carefully.
+        </div>
+    </div>
+    <div class="summary">
+        <div class="summary-item">
+            <span>MCQ Section:</span>
+            <span>20/20 Completed</span>
+        </div>
+        <div class="summary-item">
+            <span>Written Response:</span>
+            <span>3/3 Completed</span>
+        </div>
+        <div class="summary-item">
+            <span>Coding Challenge:</span>
+            <span>2/2 Completed</span>
+        </div>
+    </div>
+    <button class="submit-btn">Submit Assessment</button>
+</div>

@@ -1,0 +1,877 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>DashLite - Learning Management Dashboard</title>
+  <!-- External CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
+        rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+        rel="stylesheet" />
+  <!-- Custom CSS -->
+  <link href="styles.css" rel="stylesheet" />
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div>
+      <h4 class="mb-4">DashLite</h4>
+      <nav class="nav flex-column">
+        <a class="nav-link active" data-target="dashboard">
+          <i class="fas fa-th-large"></i> Dashboard
+        </a>
+        <a class="nav-link" data-target="profile">
+          <i class="fas fa-user-circle"></i> Profile
+        </a>
+        <a class="nav-link" data-target="curriculum">
+          <i class="fas fa-book"></i> Curriculum
+        </a>
+        <a class="nav-link" data-target="assessments">
+          <i class="fa-solid fa-puzzle-piece"></i> Assessments
+        </a>
+        <a class="nav-link" data-target="ai-quiz">
+          <i class="fas fa-file-invoice"></i> AI Quiz
+        </a>
+      </nav>
+    </div>
+    <div class="logout">
+      <a class="nav-link" href="#">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
+      </a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Dashboard Section -->
+    <div class="active" id="dashboard">
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Metric Cards -->
+          <div class="col-md-3">
+            <div class="metric-card text-center">
+              <div class="metric-icon">
+                <i class="fas fa-book"></i>
+              </div>
+              <div class="metric-value">85%</div>
+              <div class="metric-label">Course Progress</div>
+              <div class="metric-trend">
+                <i class="fas fa-arrow-up"></i> 5% this week
+              </div>
+              <!-- <svg class="progress-ring">
+                <circle class="progress-ring-circle"
+                        cx="20"
+                        cy="20"
+                        fill="none"
+                        r="15"
+                        stroke="#6c5ce7"
+                        stroke-width="3" />
+                
+              </svg> -->
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="metric-card text-center">
+              <div class="metric-icon">
+                <i class="fas fa-tasks"></i>
+              </div>
+              <div class="metric-value">92%</div>
+              <div class="metric-label">Assignment Completion</div>
+              <div class="metric-trend">
+                <i class="fas fa-arrow-up"></i> 3% this week
+              </div>
+              <!-- <svg class="progress-ring">
+                <circle class="progress-ring-circle"
+                        cx="20"
+                        cy="20"
+                        fill="none"
+                        r="15"
+                        stroke="#6c5ce7"
+                        stroke-width="3" />
+                
+              </svg> -->
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="metric-card text-center">
+              <div class="metric-icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="metric-value">78%</div>
+              <div class="metric-label">Attendance Rate</div>
+              <div class="metric-trend negative">
+                <i class="fas fa-arrow-down"></i> 2% this week
+              </div>
+              <!-- <svg class="progress-ring">
+                <circle class="progress-ring-circle"
+                        cx="20"
+                        cy="20"
+                        fill="none"
+                        r="15"
+                        stroke="#6c5ce7"
+                        stroke-width="3" />
+                
+              </svg> -->
+            </div>
+          </div>
+
+          <div class="col-md-3">
+            <div class="metric-card text-center">
+              <div class="metric-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <div class="metric-value">88%</div>
+              <div class="metric-label">Average Score</div>
+              <div class="metric-trend">
+                <i class="fas fa-arrow-up"></i> 4% this week
+              </div>
+              <!-- <svg class="progress-ring">
+                <circle class="progress-ring-circle"
+                        cx="20"
+                        cy="20"
+                        fill="none"
+                        r="15"
+                        stroke="#6c5ce7"
+                        stroke-width="3" />
+                
+              </svg> -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Activity Section -->
+        <div class="row mt-4">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header bg-white">
+                <h5 class="card-title mb-0">Recent Activity</h5>
+              </div>
+              <div class="card-body">
+                <div class="timeline">
+                  <div class="timeline-item">
+                    <i class="fas fa-check-circle text-success"></i>
+                    <span class="timeline-content">
+                      Completed "React Components" quiz with score 9/10
+                      <small class="text-muted">
+                        2 hours ago
+                      </small>
+                    </span>
+                  </div>
+                  <div class="timeline-item">
+                    <i class="fas fa-book text-primary"></i>
+                    <span class="timeline-content">
+                      Started new course "Advanced JavaScript Concepts"
+                      <small class="text-muted">
+                        Yesterday
+                      </small>
+                    </span>
+                  </div>
+                  <div class="timeline-item">
+                    <i class="fas fa-trophy text-warning"></i>
+                    <span class="timeline-content">
+                      Earned "Quick Learner" badge
+                      <small class="text-muted">
+                        2 days ago
+                      </small>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- max-w-4xl -->
+    <div class=" mx-auto" id="profile">
+      <div class="header text-center mb-6">
+        <h4 class="text-2xl font-bold">Student Profile</h4>
+        <p class="text-gray-500">
+          Basic info, like student name and contact details
+        </p>
+      </div>
+
+      <form class="profile-form" id="profileForm">
+        <div class="profile-card rounded-lg mb-6 shadow-md bg-white">
+          <div class="profile-header flex items-center justify-between">
+            <div class="flex items-center gap-6">
+              <div class="avatar w-24 h-24 flex items-center justify-center rounded-full text-3xl font-bold bg-gray-300">
+                RK
+              </div>
+              <div class="profile-info">
+                <input class="text-2xl font-semibold bg-transparent"
+                       disabled
+                       id="name"
+                       type="text"
+                       value="Ramakanth Kannuri" />
+                <input class="opacity-80 bg-transparent"
+                       disabled
+                       id="email"
+                       type="email"
+                       value="codevolution.business@gmail.com" />
+              </div>
+            </div>
+            <div class="attendance-metrics flex gap-8">
+              <div class="text-center">
+                <div class="text-3xl font-bold">85%</div>
+                <div class="text-sm opacity-80">Overall Attendance</div>
+              </div>
+              <div class="text-center">
+                <div class="text-3xl font-bold">92%</div>
+                <div class="text-sm opacity-80">This Semester</div>
+              </div>
+              <button class="edit-btn px-4 py-2 bg-blue-500 text-white rounded"
+                      id="editButton"
+                      type="button">
+                Edit Profile
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="info-container grid md:grid-cols-3 gap-6">
+          <!-- Basic Information -->
+          <div class="info-section p-3 rounded-lg shadow-md bg-white">
+            <h3 class="text-lg font-semibold mb-4 border-b pb-2">
+              Basic Information
+            </h3>
+            <div class="space-y-3">
+              <div class="info-group">
+                <label>Branch:</label>
+                <input class="bg-transparent"
+                       disabled
+                       id="branch"
+                       type="text"
+                       value="Computer Science" />
+              </div>
+              <div class="info-group">
+                <label>Year:</label>
+                <input class="bg-transparent"
+                       disabled
+                       id="year"
+                       type="text"
+                       value="3rd Year" />
+              </div>
+              <div class="info-group">
+                <label>Phone:</label>
+                <input class="bg-transparent"
+                       disabled
+                       id="phone"
+                       type="tel"
+                       value="+91 9876543210" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Information -->
+          <div class="info-section p-3 rounded-lg shadow-md bg-white">
+            <h3 class="text-lg font-semibold mb-4 border-b pb-2">
+              Additional Information
+            </h3>
+            <div class="space-y-3">
+              <div class="info-group">
+                <label>DOB:</label>
+                <input class="bg-transparent"
+                       disabled
+                       id="dob"
+                       type="text"
+                       value="29 Feb 1988" />
+              </div>
+              <div class="info-group">
+                <label>Nationality:</label>
+                <input class="bg-transparent"
+                       disabled
+                       id="nationality"
+                       type="text"
+                       value="Indian" />
+              </div>
+              <div class="info-group">
+                <label>Address:</label>
+                <input class="bg-transparent"
+                       disabled
+                       id="address"
+                       type="text"
+                       value="Hyderabad, India" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Last Login Information -->
+          <div class="info-section p-3 rounded-lg shadow-md bg-white">
+            <h3 class="text-lg font-semibold mb-4 border-b pb-2">Last Login</h3>
+            <p class="text-gray-600">23rd January 2025, 10:45 AM</p>
+          </div>
+        </div>
+      </form>
+
+      <div class="hidden bg-green-100 text-green-700 p-3 mt-4 rounded"
+           id="successMessage">
+        Profile updated successfully!
+      </div>
+    </div>
+    <!-- Curriculum Section -->
+    <div id="curriculum">
+      <p>Select Your Branch</p>
+
+      <div style="display: flex; gap: 20px">
+        <!-- First Dropdown -->
+        <div class="dropdown">
+          <button aria-expanded="false"
+                  class="btn btn-secondary dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  id="dropdown-branch-button"
+                  type="button">
+            Select Branch
+          </button>
+          <ul class="dropdown-menu">
+            <li>
+              <a class="dropdown-item" data-branch="CSE / IT" href="#">
+                CSE / IT
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" data-branch="ECE, EEE, EIE" href="#">
+                ECE, EEE, EIE
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" data-branch="Mechanical" href="#">
+                Mechanical
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" data-branch="Chemical" href="#">
+                Chemical
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" data-branch="Civil" href="#">Civil</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Second Dropdown (Initially Hidden) -->
+        <div class="dropdown"
+             id="second-dropdown-container"
+             style="display: none">
+          <button aria-expanded="false"
+                  class="btn btn-secondary dropdown-toggle"
+                  data-bs-toggle="dropdown"
+                  id="dropdown-subject-button"
+                  type="button">
+            Indicate Job Preference
+          </button>
+          <ul class="dropdown-menu" id="dropdown-subject-menu">
+            <!-- Job roles for each branch -->
+            <li class="job-roles d-none" id="CSE / IT-roles">
+              <a class="dropdown-item"
+                 data-role="Full Stack Developer"
+                 href="#">
+                Full Stack Developer
+              </a>
+              <a class="dropdown-item" data-role="Data Scientist" href="#">
+                Data Scientist
+              </a>
+            </li>
+
+            <li class="job-roles d-none" id="ECE, EEE, EIE-roles">
+              <a class="dropdown-item"
+                 data-role="Embedded Application Developer"
+                 href="#">
+                Embedded Application Developer (ECE)
+              </a>
+              <a class="dropdown-item"
+                 data-role="Electrical Design Engineer"
+                 href="#">
+                Electrical Design Engineer (EEE)
+              </a>
+              <a class="dropdown-item"
+                 data-role="Electronics Engineer"
+                 href="#">
+                Electronics Engineer (EEE, EIE & ECE)
+              </a>
+              <a class="dropdown-item" data-role="Trainee Engineer" href="#">
+                Trainee Engineer
+              </a>
+              <a class="dropdown-item"
+                 data-role="Engineer - PLC Programmer"
+                 href="#">
+                Engineer - PLC Programmer
+              </a>
+              <a class="dropdown-item"
+                 data-role="VLSI Design Engineer"
+                 href="#">
+                VLSI Design Engineer
+              </a>
+            </li>
+
+            <li class="job-roles d-none" id="Mechanical-roles">
+              <a class="dropdown-item"
+                 data-role="Mechanical Engineer (Intern)"
+                 href="#">
+                Mechanical Engineer (Intern)
+              </a>
+              <a class="dropdown-item"
+                 data-role="Mechanical Engineering, Structural Engineering"
+                 href="#">
+                Mechanical Engineering, Structural Engineering
+              </a>
+              <a class="dropdown-item" data-role="R&D Intern" href="#">
+                R&D Intern
+              </a>
+            </li>
+
+            <li class="job-roles d-none" id="Chemical-roles">
+              <a class="dropdown-item"
+                 data-role="Process Engineer in chemical plants"
+                 href="#">
+                Process Engineer in chemical plants
+              </a>
+              <a class="dropdown-item"
+                 data-role="Production Engineer at pharmaceutical companies"
+                 href="#">
+                Production Engineer at pharmaceutical companies
+              </a>
+              <a class="dropdown-item"
+                 data-role="Research & Development Engineer"
+                 href="#">
+                Research & Development Engineer
+              </a>
+              <a class="dropdown-item"
+                 data-role="Technical Service Engineer at chemical companies"
+                 href="#">
+                Technical Service Engineer at chemical companies
+              </a>
+              <a class="dropdown-item"
+                 data-role="Process Safety Engineer at industrial plants"
+                 href="#">
+                Process Safety Engineer at industrial plants
+              </a>
+              <a class="dropdown-item"
+                 data-role="Environmental Engineer at treatment plants"
+                 href="#">
+                Environmental Engineer at treatment plants
+              </a>
+              <a class="dropdown-item"
+                 data-role="Process Design Engineer at engineering firms"
+                 href="#">
+                Process Design Engineer at engineering firms
+              </a>
+            </li>
+
+            <li class="job-roles d-none" id="Civil-roles">
+              <a class="dropdown-item"
+                 data-role="Site Engineer at construction companies"
+                 href="#">
+                Site Engineer at construction companies
+              </a>
+              <a class="dropdown-item"
+                 data-role="Structural Design Engineer"
+                 href="#">
+                Structural Design Engineer
+              </a>
+              <a class="dropdown-item"
+                 data-role="Quality Control Engineer at construction sites"
+                 href="#">
+                Quality Control Engineer at construction sites
+              </a>
+              <a class="dropdown-item"
+                 data-role="AutoCAD Designer at architecture firms"
+                 href="#">
+                AutoCAD Designer at architecture firms
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-- Add this inside the existing #curriculum div, before the dropdowns -->
+      <div class="curriculum-intro">
+        <div class="intro-card">
+          <div class="intro-header">
+            <div class="intro-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <h2>Career Path Navigator</h2>
+          </div>
+
+          <div class="intro-content">
+            <div class="info-box">
+              <h3>How It Works</h3>
+              <p>
+                Select your branch and discover tailored job roles, required skills, and career opportunities aligned with your academic background.
+              </p>
+            </div>
+
+            <div class="steps-container">
+              <div class="step-card">
+                <div class="step-number">Step 1</div>
+                <h4>Select Your Branch</h4>
+                <p>
+                  Choose your engineering branch from the dropdown menu above
+                </p>
+              </div>
+
+              <div class="step-card">
+                <div class="step-number">Step 2</div>
+                <h4>Choose Job Role</h4>
+                <p>
+                  Browse through available job roles specific to your branch
+                </p>
+              </div>
+
+              <div class="step-card">
+                <div class="step-number">Step 3</div>
+                <h4>Explore Details</h4>
+                <p>
+                  Learn about job requirements, skills needed, and growth opportunities
+                </p>
+              </div>
+            </div>
+
+            <div class="tip-box">
+              <div class="tip-header">
+                <i class="fas fa-info-circle"></i>
+                <h3>Pro Tip</h3>
+              </div>
+              <p>
+                The job roles are curated based on current industry demands and trending career paths in your field. Take time to explore each role thoroughly!
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Add this after your dropdowns -->
+      <div id="selection-messages">
+        <div class="selection-message"
+             id="branch-selected-message"
+             style="display: none;">
+          <div class="message-card">
+            <div class="message-icon">
+              <i class="fas fa-check-circle"></i>
+            </div>
+            <div class="message-content">
+              <h4>Great choice!</h4>
+              <p>
+                You've selected your branch. Now, choose your preferred job role to explore detailed career information.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="selection-message"
+             id="role-selected-message"
+             style="display: none;">
+          <div class="explore-header">
+            <div class="explore-icon">
+              <i class="fas fa-compass"></i>
+            </div>
+            <div style="display: flex; flex-direction: column;">
+              <h3>Explore Career Opportunities</h3>
+              <p>
+                Discover detailed information about your selected role below
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content Display Area -->
+      <div class="mt-4" id="content-display" style="display: none"></div>
+    </div>
+    <div class="assessment-container" id="assessments">
+      <!-- Initial Assessment Card -->
+      <div class="assessment-card" id="assessment-intro">
+        <div class="assessment-header">Technical Assessment</div>
+        <div class="time-allocation-container">
+          <div class="time-allocation">Time Allocation: 90 minutes</div>
+          <p>Please complete all sections within the allocated time.</p>
+        </div>
+        <div class="instructions">
+          <div class="instructionhead">Instructions:</div>
+          <div class="instructiontext">
+            This assessment consists of three sections: MCQs, Written Response, and Coding Challenge.
+            <br />You cannot return to previous questions in the MCQ section.
+            <br />Your progress is automatically saved in the Written Response section.
+            <br />The Coding section requires a built-in compiler for testing your code.
+            <br />A minimum score of 70% is required to pass this assessment.
+          </div>
+        </div>
+        <button class="start-btn" onclick="startAssessment()">
+          Start Assessment
+        </button>
+      </div>
+
+      <!-- Main Assessment Section -->
+      <div class="main-assessment" id="main-assessment" style="display: none;">
+        <div class="assessment-header">
+          <div class="assessment-brand">
+            <div class="assessment-brand-icon">✓</div>CareerAssess
+          </div>
+          <div class="assessment-progress">
+            <div class="progress-step active" data-step="mcq">
+              <span class="step-dot">●</span>
+              MCQ
+            </div>
+            <div class="progress-step" data-step="written">
+              <span class="step-dot">●</span>
+              Written
+            </div>
+            <div class="progress-step" data-step="coding">
+              <span class="step-dot">●</span>
+              Coding
+            </div>
+          </div>
+          <div class="assessment-timer">
+            <i class="fas fa-clock"></i>
+            <span id="timer">90:00</span>
+          </div>
+        </div>
+
+        <div class="assessment-content">
+          <!-- MCQ Section -->
+          <section class="assessment-section" id="mcqSection">
+            <div class="question-text mb-4">
+              What is the primary purpose of React's useEffect hook?
+            </div>
+            <div class="assessment-options">
+              <div class="assessment-option" onclick="selectOption(this)">
+                To handle side effects in functional components
+              </div>
+              <div class="assessment-option" onclick="selectOption(this)">
+                To create new components
+              </div>
+              <div class="assessment-option" onclick="selectOption(this)">
+                To style components
+              </div>
+              <div class="assessment-option" onclick="selectOption(this)">
+                To manage state
+              </div>
+            </div>
+            <div class="d-flex justify-content-end mt-4">
+              <button class="btn btn-primary" onclick="nextSection('written')">
+                Next
+              </button>
+            </div>
+          </section>
+
+          <!-- Written Section -->
+          <section class="assessment-section"
+                   id="writtenSection"
+                   style="display: none;">
+            <div class="question-text mb-4">
+              Explain the concept of microservices architecture and its advantages over monolithic architecture.
+            </div>
+            <textarea class="form-control mb-4"
+                      placeholder="Type your answer here..."
+                      rows="8">
+            </textarea>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary" onclick="nextSection('coding')">
+                Next
+              </button>
+            </div>
+          </section>
+
+          <!-- Coding Section -->
+          <section class="assessment-section"
+                   id="codingSection"
+                   style="display: none;">
+            <div class="question-text mb-4">
+              Write a function that finds the longest palindromic substring in a given string.
+            </div>
+            <textarea class="form-control mb-4"
+                      placeholder="function longestPalindrome(s) { ... }"
+                      rows="10">
+            </textarea>
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-primary" onclick="submitAssessment()">
+                Submit
+              </button>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div id="ai-quiz">
+      <div class="quiz-container">
+        <div class="quiz-card">
+          <div class="quiz-card-header">
+            <div style="margin-bottom: 20px">
+              <h2>Today's Quiz is Ready!</h2>
+              <p>Complete today's quiz to maintain your learning streak</p>
+            </div>
+            <span class="questions-badge">10 Questions</span>
+          </div>
+          <button class="start-quiz-btn">Start Quiz</button>
+        </div>
+        <div class="stats-container">
+          <div class="stat-box">
+            <div class="stat-value">75%</div>
+            <div class="stat-label">Weekly Progress</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">12</div>
+            <div class="stat-label">Day Streak</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">10</div>
+            <div class="stat-label">Attempted Quiz</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">58%</div>
+            <div class="stat-label">Average Score</div>
+          </div>
+        </div>
+        <div class="upcoming-recent-container">
+          <div class="upcoming-section">
+            <div class="upcoming-header">Upcoming Quiz</div>
+            <div class="upcoming-item">
+              <div class="quiz-info">
+                <div class="calendar-icon">
+                  <i class="fa-brands fa-react"></i>
+                </div>
+                <div>
+                  <div class="quiz-name">React Advanced</div>
+                  <div class="quiz-date">March 16, 2024 • 2:00 PM</div>
+                </div>
+              </div>
+            </div>
+            <div class="upcoming-item">
+              <div class="quiz-info">
+                <div class="calendar-icon">
+                  <i class="fa-solid fa-terminal"></i>
+                </div>
+                <div>
+                  <div class="quiz-name">TypeScript Basics</div>
+                  <div class="quiz-date">March 18, 2024 • 10:00 AM</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="recent-achievements">
+            <div class="recent-header">Recent Achievements</div>
+            <div class="recent-item">
+              <div class="quiz-info">
+                <div class="calendar-icon">
+                  <i class="fa-solid fa-fire-flame-curved"></i>
+                </div>
+                <div>
+                  <div class="quiz-name">7-Day Streak</div>
+                  <div class="quiz-date">Completed quizzes for 7 days</div>
+                </div>
+              </div>
+            </div>
+            <div class="recent-item">
+              <div class="quiz-info">
+                <div class="calendar-icon">
+                  <i class="fa-solid fa-square-poll-vertical"></i>
+                </div>
+                <div>
+                  <div class="quiz-name">Perfect Score</div>
+                  <div class="quiz-date">Scored 100% in HTML Basics</div>
+                </div>
+              </div>
+            </div>
+            <div class="recent-item">
+              <div class="quiz-info">
+                <div class="calendar-icon">
+                  <i class="fa-brands fa-leanpub"></i>
+                </div>
+                <div>
+                  <div class="quiz-name">Quick Learner</div>
+                  <div class="quiz-date">Completed 5 quizzes in one day</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="completed-quizzes">
+          <div class="quiz-detail-card">
+            <div class="quiz-title">JavaScript Fundamentals</div>
+            <div class="quiz-score">8/10</div>
+            <div class="quiz-description">
+              Great understanding of core concepts!
+            </div>
+            <button class="review-quiz-btn">Review Quiz</button>
+          </div>
+          <div class="quiz-detail-card">
+            <div class="quiz-title">React Components</div>
+            <div class="quiz-score">9/10</div>
+            <div class="quiz-description">
+              Excellent work on component lifecycle!
+            </div>
+            <button class="review-quiz-btn">Review Quiz</button>
+          </div>
+          <div class="quiz-detail-card">
+            <div class="quiz-title">CSS Layouts</div>
+            <div class="quiz-score">7/10</div>
+            <div class="quiz-description">
+              Good progress on flexbox concepts!
+            </div>
+            <button class="review-quiz-btn">Review Quiz</button>
+          </div>
+          <div class="quiz-detail-card">
+            <div class="quiz-title">HTML Basics</div>
+            <div class="quiz-score">10/10</div>
+            <div class="quiz-description">
+              Perfect score! Outstanding performance!
+            </div>
+            <button class="review-quiz-btn">Review Quiz</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quiz Modal -->
+      <div class="quiz-modal" id="quizModal">
+        <div class="quiz-modal-content">
+          <span class="close-modal">&times;</span>
+          <div id="quizContent">
+            <div class="progress-container">
+              <div class="progress">
+                <div class="progress-bar bg-primary"
+                     role="progressbar"
+                     style="width: 0%">
+                </div>
+              </div>
+              <p class="text-end mt-2">
+                <span id="currentQuestion">1</span>/
+                <span id="totalQuestions">10</span>
+              </p>
+            </div>
+            <h3 class="mb-4" id="questionText"></h3>
+            <div id="optionsContainer"></div>
+            <button class="btn btn-primary mt-4 d-none" id="nextButton">
+              Next Question
+            </button>
+          </div>
+          <div class="results-container d-none" id="resultsContainer">
+            <h2>Quiz Results</h2>
+            <div class="score-display mb-4">
+              <h3>
+                Your Score:
+                <span id="finalScore">0</span>/
+                <span id="totalScore">0</span>
+              </h3>
+            </div>
+            <div id="detailedResults"></div>
+            <button class="btn btn-primary mt-4" id="closeResults">
+              Close
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- Add mockdata.js before script.js -->
+  <script src="mockdata.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
